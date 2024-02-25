@@ -14,6 +14,8 @@ const NewSongPage = async () => {
 
   const { data } = await supabase.auth.getUser();
 
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   if (!data.user) {
     redirect("/kirjaudu");
   }
