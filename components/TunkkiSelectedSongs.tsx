@@ -7,7 +7,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Space from "@/components/ui/space";
-import { ChevronsUpDown, GripVertical } from "lucide-react";
+import { ChevronsUpDown, GripVertical, X } from "lucide-react";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { toast } from "sonner";
@@ -65,7 +65,7 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
 
   return (
     <Collapsible>
-      <CollapsibleTrigger className="flex w-full bg-accent p-4 justify-between rounded">
+      <CollapsibleTrigger className="flex w-full bg-accent p-4 justify-between items-center rounded">
         <p className="text-sm">
           Valitut kappaleet:{" "}
           <span className="text-xl font-bold">{selectedSongs.length}</span>
@@ -86,10 +86,29 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="px-4 py-2 flex justify-between"
+                        className="p-2 flex justify-between items-center"
                       >
-                        <p>{item.title}</p>
-                        <GripVertical size={20} />
+                        <div className="flex items-center space-x-2">
+                          <GripVertical size={20} />
+                          <p className="text-sm">{item.title}</p>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            onClick={() => {
+                              setSelectedSongs(
+                                selectedSongs.filter(
+                                  (song) => song.id !== item.id
+                                )
+                              );
+                            }}
+                            variant={"destructive"}
+                            size={"icon"}
+                            className="w-6 h-6"
+                          >
+                            <X size={20} />
+                          </Button>
+                        </div>
                       </div>
                     )}
                   </Draggable>
@@ -101,10 +120,8 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
         </DragDropContext>
 
         {selectedSongs.length === 0 && (
-          <p className="text-sm pl-4 mt-2">Ei valittuja kappaleita</p>
+          <p className="text-sm pl-4 py-2 mt-2">Ei valittuja kappaleita</p>
         )}
-
-        <Space className="mt-4" />
       </CollapsibleContent>
 
       <Button onClick={generateSongs} className="w-full mt-2">

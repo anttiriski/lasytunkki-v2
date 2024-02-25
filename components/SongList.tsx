@@ -69,9 +69,9 @@ const SongList: React.FC<SongListProps> = ({ songs: initialSongs }) => {
   return (
     <div>
       <div className="flex space-x-3 items-center">
-        <SongsLanguageSelector onLanguageChange={onLanguageChange} />
-
         <Input onChange={handleSearch} placeholder="Etsi laulun sanat" />
+
+        <SongsLanguageSelector onLanguageChange={onLanguageChange} />
 
         {authenticated && (
           <TooltipProvider>
