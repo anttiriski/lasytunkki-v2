@@ -9,6 +9,7 @@ const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Laulutunkki v.2",
+  description: "Athenen laulutunkki v.2",
 };
 
 export default function RootLayout({
