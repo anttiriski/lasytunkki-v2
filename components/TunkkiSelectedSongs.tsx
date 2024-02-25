@@ -1,17 +1,27 @@
 "use client";
 
+import { useAuth } from "@/components/supabase-provider";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDown, GripVertical, X } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ChevronsUpDown, GripVertical, PlusCircle, X } from "lucide-react";
+import Link from "next/link";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { toast } from "sonner";
 
 const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
+  const { authenticated } = useAuth();
+
   // a little function to help us with reordering the result
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -124,9 +134,26 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
         )}
       </CollapsibleContent>
 
-      <Button onClick={generateSongs} className="w-full mt-2">
-        Läsytä
-      </Button>
+      <div className="flex items-center mt-2 space-x-2">
+        <Button onClick={generateSongs} className="w-full">
+          Läsytä
+        </Button>
+
+        {authenticated && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button asChild>
+                  <Link href="/uusi-laulu">
+                    <PlusCircle size={20} />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="mr-4">Lisää uusi laulu</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
     </Collapsible>
   );
 };
