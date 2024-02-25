@@ -8,7 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 const openSans = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Läsytunkki v.2",
+  title: "Laulutunkki v.2",
 };
 
 export default function RootLayout({

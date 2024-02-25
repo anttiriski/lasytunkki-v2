@@ -2,6 +2,22 @@ import SongPage from "@/components/SongPage";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { createServerClient } from "@/lib/supabase/server";
 
+export async function generateMetadata({ params, searchParams }) {
+  const id = params.song;
+
+  // fetch data
+  const supabase = createServerClient();
+  const { data } = await supabase
+    .from("songs_v2")
+    .select("*")
+    .eq("slug", id)
+    .single();
+
+  return {
+    title: data.title + " | Laulutunkki",
+  };
+}
+
 const SingleSongPage = async ({ params }) => {
   const song = await fetchSongData(params.song);
 

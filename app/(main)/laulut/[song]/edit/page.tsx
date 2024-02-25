@@ -1,7 +1,12 @@
 import EditSongPage from "@/components/EditSongPage";
 import { Song } from "@/components/SongList";
 import { createServerClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Muokkaa | Laulutunkki",
+};
 
 const EditSong = async ({ params }) => {
   const supabase = createServerClient();

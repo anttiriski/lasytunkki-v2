@@ -2,7 +2,12 @@ import BackButton from "@/components/BackButton";
 import NewSongForm from "@/components/NewSongForm";
 import Space from "@/components/ui/space";
 import { createServerClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Uusi laulu | Läsytunkki",
+};
 
 const NewSongPage = async () => {
   const supabase = createServerClient();
@@ -10,7 +15,7 @@ const NewSongPage = async () => {
   const { data } = await supabase.auth.getUser();
 
   if (!data.user) {
-    redirect("/login");
+    redirect("/kirjaudu");
   }
 
   return (

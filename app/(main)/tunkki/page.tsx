@@ -2,6 +2,11 @@ import Header from "@/components/Header";
 import TunkkiSongList from "@/components/TunkkiSongList";
 import Space from "@/components/ui/space";
 import { createServerClient } from "@/lib/supabase/server";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Läsytunkki v.2",
+};
 
 const SongbookCreationPage = async () => {
   const songs = await getAllSongs();

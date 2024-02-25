@@ -31,14 +31,24 @@ export default function SupabaseProvider({
     setLoadingUser(true);
 
     try {
-      await supabase.auth.signInWithPassword({ email, password });
-    } catch (error) {}
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    setAuthenticated(true);
-    setLoadingUser(false);
-    toast("Kirjauduttu sisään", {});
+      if (data.user) {
+        setAuthenticated(true);
+        setLoadingUser(false);
+        toast("Kirjauduttu sisään", {});
+        router.push("/");
+      }
 
-    router.push("/");
+      if (error) {
+        toast.error("Kirjautuminen epäonnistui");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const signOut = async () => {
