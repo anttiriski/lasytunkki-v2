@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: "Läsytunkki v.2",
 };
 
+export const dynamic = "force-static";
+
 const SongbookCreationPage = async () => {
   const songs = await getAllSongs();
 

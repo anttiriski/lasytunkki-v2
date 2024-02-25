@@ -2,6 +2,7 @@ var slugify = require("slugify");
 
 import { createServerClient } from "@/lib/supabase/server";
 import { songFormSchema } from "@/validations/song-form";
+import { revalidatePath } from "next/cache";
 
 export const POST = async (request: Request) => {
   const supabase = createServerClient();
@@ -59,6 +60,10 @@ export const POST = async (request: Request) => {
 
     throw new Error("server-error");
   }
+
+  revalidatePath("/laulut/" + slug);
+  revalidatePath("/tunkki");
+  revalidatePath("/");
 
   return Response.json({ success: true, slug });
 };

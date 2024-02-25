@@ -58,6 +58,8 @@ export const POST = async (request: Request) => {
   }
 
   revalidatePath(`/laulut/${slug}`);
+  revalidatePath("/tunkki");
+  revalidatePath("/");
 
   return Response.json({ success: true, slug });
 };

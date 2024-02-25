@@ -5,6 +5,8 @@ import { createServerClient } from "@/lib/supabase/server";
 
 export const revalidate = 86400; // 1 day
 
+export const dynamic = "force-static";
+
 const Home = async () => {
   const allSongs = await getAllSongs();
 
