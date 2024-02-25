@@ -10,7 +10,7 @@ export const songFormSchema = z.object({
     .max(10000, "Laulun sanat eivät saa olla yli 10000 kirjainta pitkiä."),
   melody: z
     .string()
-    .max(200, "Melodia ei saa olla yli 200 kirjainta pitkä.")
+    .max(600, "Melodia ei saa olla yli 600 kirjainta pitkä.")
     .optional(),
   melody_link: z
     .string()
