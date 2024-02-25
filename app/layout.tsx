@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: "Athenen laulutunkki v.2",
 };
 
+// Prevents zooming on mobile devices
 export const viewport: Viewport = {
   themeColor: "black",
   maximumScale: 1,
