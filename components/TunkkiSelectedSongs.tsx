@@ -38,10 +38,31 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
 
   const generateSongs = async () => {
     if (!selectedSongs.length) {
-      return toast.info("Valitse ainakin yksi kappale");
+      return toast.info("Valitse ainakin yksi kappale.");
     }
-  };
 
+    let temp = "";
+
+    selectedSongs.forEach((song, index) => {
+      temp += `
+      <strong>${index + 1}. ${song.title}</strong>
+      <br />
+      ${song.melody ? `<i>Mel. ${song.melody}</i><br />` : ""}
+      <pre>${song.lyrics}</pre>
+      <br />
+      <br />
+      `;
+    });
+
+    // Copy to clipboard
+    await window.navigator.clipboard.write([
+      new ClipboardItem({
+        "text/html": new Blob([temp], { type: "text/html" }),
+      }),
+    ]);
+
+    toast.success("Laulut kopioitu leikepöydälle");
+  };
   return (
     <Collapsible>
       <CollapsibleTrigger className="flex w-full bg-accent p-4 justify-between items-center rounded">
