@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Läsytunkki v.2",
 };
 
+export const revalidate = 86400; // 1 day
 export const dynamic = "force-static";
 
 const SongbookCreationPage = async () => {
