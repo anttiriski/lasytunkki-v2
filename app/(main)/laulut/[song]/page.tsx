@@ -18,6 +18,8 @@ export async function generateMetadata({ params, searchParams }) {
   };
 }
 
+export const dynamic = "force-static";
+
 const SingleSongPage = async ({ params }) => {
   const song = await fetchSongData(params.song);
 
