@@ -8,18 +8,18 @@ interface SongListItemProps {
 }
 
 const SongListItem: React.FC<SongListItemProps> = ({ song }) => {
-  const lyricsPreview = song.lyrics.slice(0, 120);
+  const lyricsPreview = song.lyrics.slice(0, 140);
 
   return (
     <Link
       href={`/laulut/${song.slug}`}
       className="flex flex-col p-4 hover:bg-neutral-50 dark:hover:bg-opacity-5 fade-in"
     >
-      <p className="truncate">{song.title}</p>
+      <p className="truncate font-medium">{song.title}</p>
 
       <Space className="mt-2" />
 
-      <p className="text-sm text-muted-foreground">{lyricsPreview}</p>
+      <p className="text-sm text-muted-foreground">{lyricsPreview}...</p>
     </Link>
   );
 };

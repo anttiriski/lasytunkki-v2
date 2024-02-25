@@ -38,7 +38,6 @@ const TunkkiSelectedSongs = ({ selectedSongs, setSelectedSongs }) => {
   };
 
   const generateSongs = async () => {
-    console.log(selectedSongs);
     if (!selectedSongs.length) return;
 
     let temp = "";

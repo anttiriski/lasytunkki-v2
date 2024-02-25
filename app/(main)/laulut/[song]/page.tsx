@@ -1,4 +1,5 @@
 import BackButton from "@/components/BackButton";
+import EditSongButton from "@/components/EditSongButton";
 import ShareInTelegramButton from "@/components/ShareInTelegramButton";
 import Space from "@/components/ui/space";
 import {
@@ -21,7 +22,11 @@ const SongPage = async ({ params }) => {
 
       <Space className="mt-4" />
 
-      <ShareInTelegramButton lyrics={song.lyrics} title={song.title} />
+      <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
+        <ShareInTelegramButton lyrics={song.lyrics} title={song.title} />
+
+        <EditSongButton songSlug={song.slug} />
+      </div>
 
       <Space className="mt-4" />
 

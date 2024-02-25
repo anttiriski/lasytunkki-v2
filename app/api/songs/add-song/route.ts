@@ -33,8 +33,6 @@ export const POST = async (request: Request) => {
     slug,
   });
 
-  console.log(error);
-
   if (error) {
     // Duplicate slug error
     if (error.code === "23505") {

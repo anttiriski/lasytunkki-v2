@@ -7,11 +7,9 @@ export const songFormSchema = z.object({
     .max(200, "Laulun otsikko ei saa olla yli 200 kirjainta pitkä."),
   lyrics: z
     .string()
-    .min(1, "Laulun sanojen pitää olla vähintään 1 kirjain pitkä.")
     .max(10000, "Laulun sanat eivät saa olla yli 10000 kirjainta pitkiä."),
   melody: z
     .string()
-    .min(1, "Melodian pitää olla vähintään 1 kirjain pitkä.")
     .max(200, "Melodia ei saa olla yli 200 kirjainta pitkä.")
     .optional(),
   melody_link: z
