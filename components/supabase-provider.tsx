@@ -4,11 +4,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 import { SupabaseClient, User } from "@supabase/supabase-js";
 import { createBrowserClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type SupabaseContext = {
   supabase: SupabaseClient;
   authenticated: boolean;
   loadingUser: boolean;
+  signInEmail: (email: string, password: string) => void;
+  signOut: () => void;
 };
 
 const Context = createContext<SupabaseContext | undefined>(undefined);
@@ -18,9 +22,31 @@ export default function SupabaseProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
   const [supabase] = useState(() => createBrowserClient());
   const [loadingUser, setLoadingUser] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+
+  const signInEmail = async (email: string, password: string) => {
+    setLoadingUser(true);
+
+    try {
+      await supabase.auth.signInWithPassword({ email, password });
+    } catch (error) {}
+
+    setAuthenticated(true);
+    setLoadingUser(false);
+    toast("Kirjauduttu sisään", {});
+
+    router.push("/");
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+
+    toast("Kirjauduttu ulos");
+    setAuthenticated(false);
+  };
 
   useEffect(() => {
     const checkUser = async () => {
@@ -51,6 +77,8 @@ export default function SupabaseProvider({
         supabase,
         authenticated,
         loadingUser,
+        signInEmail,
+        signOut,
       }}
     >
       <>{children}</>

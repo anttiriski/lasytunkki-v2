@@ -1,16 +1,14 @@
 "use client";
 
+import { useAuth } from "@/components/supabase-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { createBrowserClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 
 import React from "react";
 
 const Login = () => {
+  const { signInEmail } = useAuth();
   const [loading, setLoading] = React.useState(false);
-
-  const router = useRouter();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,16 +16,9 @@ const Login = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    const supabase = createBrowserClient();
+    setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (data) {
-      router.push("/");
-    }
+    await signInEmail(email, password);
   };
 
   return (

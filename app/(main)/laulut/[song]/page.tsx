@@ -16,7 +16,7 @@ const SongPage = async ({ params }) => {
   const song = await fetchSongData(params.song);
 
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <BackButton />
 
       <Space className="mt-4" />

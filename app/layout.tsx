@@ -3,7 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import SupabaseProvider from "@/components/supabase-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 
 const openSans = Open_Sans({ subsets: ["latin"] });
 
@@ -29,7 +29,7 @@ export default function RootLayout({
         >
           <SupabaseProvider>{children}</SupabaseProvider>
 
-          <Toaster />
+          <Toaster position="bottom-center" duration={2000} />
         </ThemeProvider>
       </body>
     </html>

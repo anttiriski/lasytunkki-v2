@@ -1,14 +1,7 @@
-import { DarkmodeToggle } from "@/components/DarkmodeToggle";
 import Header from "@/components/Header";
 import SongList from "@/components/SongList";
-import { useAuth } from "@/components/supabase-provider";
-import { Button } from "@/components/ui/button";
 import Space from "@/components/ui/space";
-import { getAdminSupabase } from "@/lib/supabase/admin";
 import { createServerClient } from "@/lib/supabase/server";
-
-import { KeyRound } from "lucide-react";
-import Link from "next/link";
 
 export const revalidate = 10;
 
@@ -24,7 +17,7 @@ const Home = async () => {
       <Header />
 
       <h1 className="text-4xl sm:text-5xl font-black text-center mt-8 text-green-800 dark:text-neutral-300">
-        LÄSYTUNKKI v.2
+        Laulutunkki v.2
       </h1>
 
       <Space className="mt-8" />

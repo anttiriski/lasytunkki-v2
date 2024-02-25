@@ -2,16 +2,20 @@
 
 import { Input } from "@/components/ui/input";
 import Space from "@/components/ui/space";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Fuse from "fuse.js";
 import SongListItem from "@/components/SongListItem";
+import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import SongsLanguageSelector from "@/components/SongsLanguageSelector";
+import { useAuth } from "@/components/supabase-provider";
+import Link from "next/link";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export interface Song {
   id: number;
@@ -21,7 +25,6 @@ export interface Song {
   slug: string;
   melody: string;
   melody_link: string;
-  deleted: boolean;
   language: "finnish" | "swedish" | "english" | "other";
 }
 
@@ -30,12 +33,13 @@ interface SongListProps {
 }
 
 const SongList: React.FC<SongListProps> = ({ songs: initialSongs }) => {
+  const { authenticated } = useAuth();
+
   const fuse = new Fuse(initialSongs, {
     keys: ["title"],
     threshold: 0.2,
   });
 
-  const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [songs, setSongs] = useState(initialSongs);
 
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,39 +54,42 @@ const SongList: React.FC<SongListProps> = ({ songs: initialSongs }) => {
     setSongs(foundSongs);
   };
 
-  useEffect(() => {
-    if (selectedLanguage === "all") {
+  const onLanguageChange = (languages) => {
+    if (languages.length === 0) {
       return setSongs(initialSongs);
     }
 
-    const filteredSongs = initialSongs.filter(
-      (song) => song.language === selectedLanguage
+    const filteredSongs = initialSongs.filter((song) =>
+      languages.includes(song.language)
     );
 
     setSongs(filteredSongs);
-  }, [selectedLanguage]);
+  };
 
   return (
     <div>
-      <Input onChange={handleSearch} placeholder="Etsi laulun sanat" />
+      <div className="flex space-x-3 items-center">
+        <SongsLanguageSelector onLanguageChange={onLanguageChange} />
+
+        <Input onChange={handleSearch} placeholder="Etsi laulun sanat" />
+
+        {authenticated && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button asChild>
+                  <Link href="/uusi-laulu">
+                    <PlusCircle size={20} />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="mr-4">Lisää uusi laulu</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
 
       <Space className="mt-4" />
-
-      <Select
-        onValueChange={(value) => setSelectedLanguage(value)}
-        defaultValue="finnish"
-      >
-        <SelectTrigger className="w-[120px]">
-          <SelectValue placeholder="Kieli" />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectItem value="finnish">Suomi</SelectItem>
-          <SelectItem value="swedish">Ruotsi</SelectItem>
-          <SelectItem value="english">Englanti</SelectItem>
-          <SelectItem value="other">Muu</SelectItem>
-        </SelectContent>
-      </Select>
 
       <Space className="mt-4" />
 
